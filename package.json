@@ -1,0 +1,9 @@
+{
+  "name": "particle",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "http-server ./public -c-1 -p 8000 -a localhost"
+  }
+}
