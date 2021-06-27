@@ -69,9 +69,3 @@ mouseClickListener.dispose();
 
 ## Parabola
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/23313008/123536293-6a984e80-d764-11eb-975a-2271aaa8dcbb.gif)
-
-# 🖌 Update logs
-## 2021/06/28
-- ParticleProvider를 추가하여 모듈화
-- Animation Listener 모듈화
-- 기존 html위에서 동작할 수 있도록 canvas를 위에 덮어씌워줌
