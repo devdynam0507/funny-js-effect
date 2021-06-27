@@ -4,7 +4,7 @@ class DropEffect {
         this.gravity = gravity;
         this.accel = accel;
         this.weight = weight;
-        this.time = 0;
+        this.t = 0;
     }
 
     updateTime(time) {
