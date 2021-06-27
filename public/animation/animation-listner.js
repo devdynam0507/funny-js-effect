@@ -1,15 +1,18 @@
 class OnMouseTrackerListener {
-    constructor(e, observer, tracking, shape){
+    constructor(observer, shape){
         this.observer = observer;
-
-        document.addEventListener(e, (e) => {
+        this.originalObserver = (e) => {
             this.update(e.pageX, e.pageY);
             this.observer(e.pageX, e.pageY, shape(e.pageX, e.pageY));
-        });
+        };
+    }
 
-        if(tracking) {
-            setInterval(() => this.exec(shape), 180); //200ms
-        }
+    dispose() {
+        document.removeEventListener("mousemove", this.originalObserver);
+    }
+
+    listen() {
+        document.addEventListener("mousemove", this.originalObserver);
     }
 
     update(x, y) {
@@ -27,6 +30,30 @@ class OnMouseTrackerListener {
 
 }
 
+class OnMouseClickListener {
+    constructor(observer, shape) {
+        this.observer = observer;
+        this.originalObserver = (e) => {
+            this.update(e.pageX, e.pageY);
+            this.observer(e.pageX, e.pageY, shape(e.pageX, e.pageY));
+        };
+    }
+
+    listen() {
+        document.addEventListener("click", this.originalObserver);
+    }
+
+    dispose() {
+        document.removeEventListener("click", this.originalObserver);
+    }
+
+    update(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
 export {
-    OnMouseTrackerListener
+    OnMouseTrackerListener,
+    OnMouseClickListener
 }

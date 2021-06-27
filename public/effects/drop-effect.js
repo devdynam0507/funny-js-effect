@@ -21,8 +21,10 @@ class DropEffect {
 
     update() {
         this.count();
+
         let accelBasedGravity = this.weight * (this.gravity/1000);
         this.accel += accelBasedGravity;
+
         this.moveTo(0, this.accel);
     }
 
@@ -34,4 +36,11 @@ class DropEffect {
 
 }
 
-export default DropEffect;
+const createDropEffect = () => {
+    return new DropEffect(9.8, 0, 1);
+}
+
+export {
+    DropEffect,
+    createDropEffect
+}

@@ -1,8 +1,6 @@
 class AnimationExecuter {
 
-    constructor(animationCount, updater) {
-        this.animationCount = animationCount;
-        this.animationExecutedCount = 0;
+    constructor(updater) {
         this.updater = updater;
         this.shapes = [];
     }
@@ -40,7 +38,7 @@ class AnimationExecuter {
 
     run() {
         this.handle();
-        this.updater.update(1000, 1000, this.shapes, 300);
+        this.updater.update(this.shapes);
 
         this.id = window.requestAnimationFrame(() => this.run());
     }
@@ -53,11 +51,12 @@ class AnimationDraw {
         this.context.globalCompositeOperation = 'destination-over';
     }
 
-    update(windowSizeX, windowSizeY, shapes, updateSpeed) {
-        this.context.clearRect(0, 0, windowSizeX, windowSizeY);
+    update(shapes) {
+        this.context.clearRect(0, 0, window.outerWidth, window.outerHeight);
 
         for(let i = 0; i < shapes.length; i++) {
             shapes[i].draw(this.context);
+            this.context.fill();
         }
     
         this.context.beginPath();
@@ -65,7 +64,43 @@ class AnimationDraw {
 
 }
 
+/*
+    canvas, animation, animation-draw를 제공합니다.
+*/
+class ParticleProvider {
+
+    constructor(canvasId) {
+        this.canvasId = canvasId;
+        this.canvas = document.getElementById(canvasId);
+        this.ctx = this.canvas.getContext('2d'); 
+        this.draw = new AnimationDraw(this.ctx);
+        this.animation = new AnimationExecuter(this.draw);
+        this.defaultObserver = (x, y, shape) => {
+            this.addParticleToRenderQueue(shape);
+        }
+    }
+
+    init() {
+        this._initCanvasStyle();
+        this.animation.run();
+    }
+
+    _initCanvasStyle() {
+        this.canvas.style.position = "absolute";
+        this.canvas.style.zIndex = 2;
+        this.canvas.style.pointerEvents = "none";
+        this.canvas.width = window.outerWidth;
+        this.canvas.height = window.outerHeight;
+    }
+
+    addParticleToRenderQueue(shape) {
+        this.animation.add(shape);
+    }
+
+}
+
 export {
     AnimationDraw,
-    AnimationExecuter
+    AnimationExecuter,
+    ParticleProvider
 };

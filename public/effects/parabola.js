@@ -47,4 +47,11 @@ class Parabola {
 
 }
 
-export default Parabola;
+let createParabolaEffect = () => {
+    return new Parabola(0.09, 'random');
+}
+
+export {
+    Parabola,
+    createParabolaEffect
+};

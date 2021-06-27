@@ -7,52 +7,62 @@
 - Parabola Effect
 - Rainbow color
 
-# Create Animation Context
+# Create Particle Provider
 ```javascript
-import { AnimationDraw, AnimationExecuter } from "./animation/animation.js";
+import { ParticleProvider } from "./animation/animation.js";
 
-const animation = new AnimationDraw(canvas());
-const animationExecuter = new AnimationExecuter(100, animation);
-
-animationExecuter.run(); // 애니메이션 실행
+// provider에게 현재 사용할 html cavans id를 넘겨주어야 합니다.
+let provider = new ParticleProvider('canvas');
+provider.init();
 ```
 
 # Create Shape Example
 ```javascript
-import DropEffect from "./effects/drop-effect.js";
-import Parabola from "./effects/parabola.js";
+import { Parabola, createParabolaEffect } from "./parabola.js";
 import Circle from "./shapes/circle.js";
 
-const makeCircleBuilder = (x, y) => {
-    const attribute = new ShapeAttribute(); //rainbow
-    const effect = new Parabola(0.06, 'random'); // gravity 0.06, 방향은 랜덤
-    const circle = new Circle(x, y, attribute);
+// particle을 생성하는 함수를 정의합니다. 인자로 무조건 x, y를 받습니다.
+let circle = (x, y) => {
+    let attribute = new ShapeAttribute(); // 생성자에 색깔을 넣지 않으면 자동 rainbow색깔로 할당됩니다. 색깔은 string으로 넣어주시면 됩니다.
+    let shape = new Circle(2, x ,y , );
+    // direction은 랜덤으로 주고 실험해봤을 떄 최적의 gravity인 0.09로
+    shape.attachEffect(createParabolaEffect());
 
-    circle.attachEffect(effect);
-
-    return circle;
+    return shape;
 }
 ```
 
-# Register event listener
+# Enable Event listener
 ```javascript
-import { OnMouseTrackerListener } from "./listener/animation-listner.js";
+import { OnMouseTracingListener, OnMouseClickListener } from "./listener/animation-listner.js";
+import { Parabola, createParabolaEffect } from "./parabola.js";
 
-/*
-    OnMouseTrackerListener Parameter
-    @param e -> do tracking event name
-    @param observer -> event observer
-    @param tracking -> mouse location tracking (interval)
-    @param shape -> shape builder function
-*/
-const mouseClick = new OnMouseTrackerListener('click', (x, y, shape) => {
-    animationExecuter.add(shape); //애니메이션 updater에 모양 등록
-}, false, makeCircleBuilder);
+let provider = new ParticleProvider('canvas');
+provider.init();
 
-const infinityMouseTracking = new OnMouseTrackerListener('mousemove', (x, y, shape) => {
-    animationExecuter.add(shape);
-    
-}, true, makeCircleBuilder);
+let circle = (x, y) => {
+    let attribute = new ShapeAttribute(); // 생성자에 색깔을 넣지 않으면 자동 rainbow색깔로 할당됩니다. 색깔은 string으로 넣어주시면 됩니다.
+    let shape = new Circle(2, x ,y , );
+    shape.attachEffect(createParabolaEffect());
+
+    return shape;
+}
+
+let mouseTrackingListener = new OnMouseTrackerListener(
+    provider.defaultObserver, circle
+);
+
+let mouseClickListener = new OnMouseClickListener(
+    provider.defaultObserver, circle
+);
+
+// 이벤트 리스너 활성화
+mouseTrackingListener.listen();
+mouseClickListener.listen();
+
+// 이벤트 리스너 해제
+mouseTrackingListener.dispose();
+mouseClickListener.dispose();
 ```
 
 ## Water drop effect
@@ -60,3 +70,9 @@ const infinityMouseTracking = new OnMouseTrackerListener('mousemove', (x, y, sha
 
 ## Parabola
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/23313008/123536293-6a984e80-d764-11eb-975a-2271aaa8dcbb.gif)
+
+# 🖌 Update logs
+## 2021/06/28
+- ParticleProvider를 추가하여 모듈화
+- Animation Listener 모듈화
+- 기존 html위에서 동작할 수 있도록 canvas를 위에 덮어씌워줌

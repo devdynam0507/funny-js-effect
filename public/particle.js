@@ -1,29 +1,27 @@
-import { AnimationDraw, AnimationExecuter } from "./animation.js";
-import DropEffect from "./drop-effect.js";
-import Parabola from "./parabola.js";
-import Circle from "./circle.js";
-import { OnMouseTrackerListener } from "./animation-listner.js";
-import ShapeAttribute from './shape-attribute.js'
+import { ParticleProvider } from "./animation/animation.js";
+import { Parabola, createParabolaEffect } from "./effects/parabola.js";
+import Circle from "./shapes/circle.js";
+import { OnMouseTrackerListener, OnMouseClickListener } from "./animation/animation-listner.js";
+import ShapeAttribute from './shapes/shape-attribute.js'
 
-const canvas = () => {
-    let canv = document.getElementById('canvas');    
-    return canv.getContext('2d');
+// particle provider 설정 초기화
+let provider = new ParticleProvider('canvas');
+provider.init();
+
+let circle = (x, y) => {
+    let shape = new Circle(2, x ,y , new ShapeAttribute());
+    shape.attachEffect(createParabolaEffect());
+
+    return shape;
 }
 
-const animation = new AnimationDraw(canvas());
-const animationExecuter = new AnimationExecuter(100, animation);
-animationExecuter.run();
+let mouseTrackingListener = new OnMouseTrackerListener(
+    provider.defaultObserver, circle
+);
 
-const makeCircleBuilder = (x, y) => {
-    const attribute = new ShapeAttribute(); //rainbow
-    const effect = new Parabola(0.06, 'random'); // gravity 0.06, 방향은 랜덤
-    const circle = new Circle(2, x, y, attribute);
-    circle.attachEffect(effect);
+let mouseClickListener = new OnMouseClickListener(
+    provider.defaultObserver, circle
+);
 
-    return circle;
-}
-
-const tracker = new OnMouseTrackerListener('click', (x, y, shape) => {
-    animationExecuter.add(shape);
-    
-}, false, makeCircleBuilder);
+mouseTrackingListener.listen();
+mouseClickListener.listen();
