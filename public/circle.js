@@ -1,16 +1,17 @@
 class Circle {
 
-    constructor(radius, x, y) {
+    constructor(radius, x, y, attribute) {
         this.radius = radius;
         this.x = x;
         this.y = y;
+        this.attribute = attribute;
     }
 
     attachEffect(effect) {
         this.effect = effect;
     }
 
-    update(ctx) {
+    update() {
         this.effect.update();
         this.moveTo(0, this.effect.accel);
     }
@@ -18,7 +19,7 @@ class Circle {
     draw(ctx) {
         ctx.moveTo(this.x, this.y);
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'orange';
+        ctx.fillStyle = this.attribute.color;
         ctx.fill();
     }
 

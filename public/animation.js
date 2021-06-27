@@ -1,18 +1,13 @@
 class AnimationExecuter {
 
-    constructor(animationCount, updater, shape, effect) {
+    constructor(animationCount, updater) {
         this.animationCount = animationCount;
         this.animationExecutedCount = 0;
         this.updater = updater;
-        this.shape = shape;
-        this.effect = effect;
-        this.x = 0;
-        this.y = 0;
         this.shapes = [];
     }
 
     add(shape) {
-        console.log(this.latest + " " + new Date().getTime())
         let millis = new Date().getTime() - this.latest;
         if(millis < 100) {
             return;
