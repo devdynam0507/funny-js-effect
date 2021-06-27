@@ -12,8 +12,7 @@ class Circle {
     }
 
     update() {
-        this.effect.update();
-        this.moveTo(0, this.effect.accel);
+        this.effect.update(this);
     }
 
     draw(ctx) {
@@ -26,6 +25,11 @@ class Circle {
     moveTo(dx, dy) {
         this.x += dx;
         this.y += dy;
+    }
+
+    setLocation(x, y) {
+        this.x = x;
+        this.y = y;
     }
 
     getCoordinate() {

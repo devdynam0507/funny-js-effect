@@ -4,3 +4,6 @@
 
 ## Water drop effect
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/23313008/123525346-da79eb00-d70a-11eb-99aa-3f3f4e646e40.gif)
+
+## Parabola
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/23313008/123536293-6a984e80-d764-11eb-975a-2271aaa8dcbb.gif)

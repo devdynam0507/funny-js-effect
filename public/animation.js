@@ -27,7 +27,7 @@ class AnimationExecuter {
 
     handle() {
         for(let i = 0; i < this.shapes.length; i++) {
-            if(this.shapes[i].effect.accel > 7.0) {
+            if(this.shapes[i].effect.t > this.shapes[i].effect.targetCount()) {
                 if(this.shapes[i] != undefined) {
                     this.remove(this.shapes[i]);
                 }

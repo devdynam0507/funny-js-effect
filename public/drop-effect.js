@@ -8,16 +8,28 @@ class DropEffect {
     }
 
     updateTime(time) {
-        this.time = time;
+        this.t = time;
+    }
+
+    count() {
+        this.t += 1;
+    }
+
+    targetCount() {
+        return 10;
     }
 
     update() {
+        this.count();
         let accelBasedGravity = this.weight * (this.gravity/1000);
         this.accel += accelBasedGravity;
+        this.moveTo(0, this.accel);
     }
 
-    accel() {
-        return this.accel;
+    weights() {
+        return [
+            0, this.accel
+        ];
     }
 
 }
