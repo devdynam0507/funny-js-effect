@@ -22,7 +22,7 @@ const animationExecuter = new AnimationExecuter(100, animation);
 animationExecuter.run();
 
 const makeCircleExample = (x, y) => {
-    const circle = new Circle(2, x, y, attribute);
+    const circle = new Circle(2, x, y, new ShapeAttribute());
     circle.attachEffect(new DropEffect(9.8, 0, 10));
     animationExecuter.add(circle);    
 }
