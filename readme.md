@@ -24,7 +24,7 @@ import Circle from "./shapes/circle.js";
 // particle을 생성하는 함수를 정의합니다. 인자로 무조건 x, y를 받습니다.
 let circle = (x, y) => {
     let attribute = new ShapeAttribute(); // 생성자에 색깔을 넣지 않으면 자동 rainbow색깔로 할당됩니다. 색깔은 string으로 넣어주시면 됩니다.
-    let shape = new Circle(2, x ,y , );
+    let shape = new Circle(2, x ,y , attribute);
     // direction은 랜덤으로 주고 실험해봤을 떄 최적의 gravity인 0.09로
     shape.attachEffect(createParabolaEffect());
 
@@ -42,7 +42,7 @@ provider.init();
 
 let circle = (x, y) => {
     let attribute = new ShapeAttribute(); // 생성자에 색깔을 넣지 않으면 자동 rainbow색깔로 할당됩니다. 색깔은 string으로 넣어주시면 됩니다.
-    let shape = new Circle(2, x ,y , );
+    let shape = new Circle(2, x ,y , attribute);
     shape.attachEffect(createParabolaEffect());
 
     return shape;
