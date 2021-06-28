@@ -1,8 +1,8 @@
-import { ParticleProvider } from "./animation/animation.js";
-import { Parabola, createParabolaEffect } from "./effects/parabola.js";
-import Circle from "./shapes/circle.js";
-import { OnMouseTrackerListener, OnMouseClickListener } from "./animation/animation-listner.js";
-import ShapeAttribute from './shapes/shape-attribute.js'
+import { ParticleProvider } from "./animation.js";
+import { Parabola, createParabolaEffect } from "./parabola.js";
+import Circle from "./circle.js";
+import { OnMouseTrackerListener, OnMouseClickListener } from "./animation-listner.js";
+import ShapeAttribute from './shape-attribute.js'
 
 // particle provider 설정 초기화
 let provider = new ParticleProvider('canvas');

@@ -39,12 +39,6 @@ class Parabola {
         shape.moveTo(this.vx, this.vy);
     }
 
-    weights() {
-        return [
-            0, this.accel
-        ];
-    }
-
 }
 
 let createParabolaEffect = () => {

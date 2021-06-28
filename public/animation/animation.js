@@ -24,23 +24,23 @@ class AnimationExecuter {
     }
 
     handle() {
+        console.log(this.shapes.length);
         for(let i = 0; i < this.shapes.length; i++) {
-            if(this.shapes[i].effect.t > this.shapes[i].effect.targetCount()) {
+            if(this.shapes[i].effect.t >= this.shapes[i].effect.targetCount()) {
                 if(this.shapes[i] != undefined) {
                     this.remove(this.shapes[i]);
                 }
             }
             else {
-                this.shapes[i].update(this.context);
+                this.shapes[i].update();
+                window.requestAnimationFrame(() => this.updater.update(this.shapes));
             }
         }
     }
 
     run() {
         this.handle();
-        this.updater.update(this.shapes);
-
-        this.id = window.requestAnimationFrame(() => this.run());
+        window.requestAnimationFrame(() => this.run());
     }
 }
 
@@ -51,12 +51,18 @@ class AnimationDraw {
         this.context.globalCompositeOperation = 'destination-over';
     }
 
+    updateOne(shape) {
+        this.context.clearRect(0, 0, window.outerWidth, window.outerHeight);
+        shape.draw(this.context);
+        this.context.beginPath();
+    }
+
     update(shapes) {
         this.context.clearRect(0, 0, window.outerWidth, window.outerHeight);
 
         for(let i = 0; i < shapes.length; i++) {
             shapes[i].draw(this.context);
-            this.context.fill();
+            this.context.beginPath();
         }
     
         this.context.beginPath();

@@ -20,14 +20,6 @@ class OnMouseTrackerListener {
         this.y = y;
     }
 
-    exec(shape) {
-        if(this.x != undefined && this.y != undefined) {
-            this.observer(
-                this.x, this.y, shape(this.x, this.y)
-            );
-        }
-    }
-
 }
 
 class OnMouseClickListener {

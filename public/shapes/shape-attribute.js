@@ -1,11 +1,11 @@
+const rainbowColors = [
+    "red", "orange", "yellow", "green", "blue", "navy", "purple"
+]
+
 class ShapeAttribute {
 
-    rainbowColors = [
-        "red", "orange", "yellow", "green", "blue", "navy", "purple"
-    ]
-
     constructor(color) {
-        this.color = color === undefined ? this.rainbowColors[parseInt(Math.random() * this.rainbowColors.length)] : color;
+        this.color = color === undefined ? rainbowColors[parseInt(Math.random() * rainbowColors.length)] : color;
     }
 
 }
