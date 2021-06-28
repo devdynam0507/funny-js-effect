@@ -3,6 +3,7 @@ class AnimationExecuter {
     constructor(updater) {
         this.updater = updater;
         this.shapes = [];
+        this.isExecuted = false;
     }
 
     add(shape) {
@@ -39,7 +40,15 @@ class AnimationExecuter {
 
     run() {
         this.handle();
-        window.requestAnimationFrame(() => this.run());
+        
+        if(this.shapes.length > 0) {
+            this.isExecuted = true;
+            window.requestAnimationFrame(() => this.run());
+        }
+        else {
+            this.updater.clearScreen();
+            this.isExecuted = false;
+        }
     }
 }
 
@@ -50,8 +59,12 @@ class AnimationDraw {
         this.context.globalCompositeOperation = 'destination-over';
     }
 
-    update(shapes) {
+    clearScreen() {
         this.context.clearRect(0, 0, window.outerWidth, window.outerHeight);
+    }
+
+    update(shapes) {
+        this.clearScreen();
 
         for(let i = 0; i < shapes.length; i++) {
             shapes[i].draw(this.context);
@@ -74,6 +87,10 @@ class ParticleProvider {
         this.animation = new AnimationExecuter(this.draw);
         this.defaultObserver = (x, y, shape) => {
             this.addParticleToRenderQueue(shape);
+
+            if(!this.animation.isExecuted) {
+                this.animation.run();
+            }
         }
     }
 
