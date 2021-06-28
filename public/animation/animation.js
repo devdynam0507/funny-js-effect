@@ -24,7 +24,6 @@ class AnimationExecuter {
     }
 
     handle() {
-        console.log(this.shapes.length);
         for(let i = 0; i < this.shapes.length; i++) {
             if(this.shapes[i].effect.t >= this.shapes[i].effect.targetCount()) {
                 if(this.shapes[i] != undefined) {
@@ -51,21 +50,13 @@ class AnimationDraw {
         this.context.globalCompositeOperation = 'destination-over';
     }
 
-    updateOne(shape) {
-        this.context.clearRect(0, 0, window.outerWidth, window.outerHeight);
-        shape.draw(this.context);
-        this.context.beginPath();
-    }
-
     update(shapes) {
         this.context.clearRect(0, 0, window.outerWidth, window.outerHeight);
 
         for(let i = 0; i < shapes.length; i++) {
             shapes[i].draw(this.context);
             this.context.beginPath();
-        }
-    
-        this.context.beginPath();
+        }    
     }
 
 }
